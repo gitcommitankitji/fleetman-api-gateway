@@ -27,6 +27,7 @@ pipeline {
 
       stage('Build and Push Image') {
          steps {
+           sh 'eval $(minikube docker-env)'
            sh 'docker image build -t ${REPOSITORY_TAG} .'
          }
       }
@@ -34,7 +35,6 @@ pipeline {
       stage('Deploy to Cluster') {
           steps {
              sh 'envsubst < ${WORKSPACE}/deploy.yaml'
-             sh 'eval $(minikube docker-env)'
              sh 'envsubst < ${WORKSPACE}/deploy.yaml | kubectl apply -f -'
           }
       }
