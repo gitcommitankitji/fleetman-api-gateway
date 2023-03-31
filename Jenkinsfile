@@ -27,7 +27,6 @@ pipeline {
 
       stage('Build and Push Image') {
          steps {
-           sh 'eval $(minikube docker-env)'
            sh 'docker image build -t ${REPOSITORY_TAG} .'
          }
       }
